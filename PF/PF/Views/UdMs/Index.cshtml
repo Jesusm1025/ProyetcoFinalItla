@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PF.Models.UdM>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UnidadBase)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnidadVenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnidadCompra)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnidadBase)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnidadVenta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnidadCompra)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UdmId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UdmId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UdmId })
+        </td>
+    </tr>
+}
+
+</table>

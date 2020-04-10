@@ -1,0 +1,689 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProyectoFinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" />
+          <Property Name="direccion" Type="varchar" MaxLength="50" />
+          <Property Name="telefono" Type="varchar" MaxLength="50" />
+          <Property Name="correo" Type="varchar" MaxLength="50" />
+          <Property Name="idtc" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ProyectoFinal.dbo.Despacho' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Despacho">
+          <Key>
+            <PropertyRef Name="idTda" />
+            <PropertyRef Name="idCliente" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="idTda" Type="int" Nullable="false" />
+          <Property Name="idCliente" Type="int" Nullable="false" />
+          <Property Name="idProducto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstadoProducto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permisos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="idModulo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Permisos_Por_Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idRol" Type="int" Nullable="false" />
+          <Property Name="idPermisos" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha_Creacion" Type="datetime" />
+          <Property Name="Fecha_Vencimiento" Type="datetime" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+          <Property Name="udm" Type="varchar" MaxLength="50" />
+          <Property Name="Costo" Type="money" Nullable="false" />
+          <Property Name="Existencia" Type="int" Nullable="false" />
+          <Property Name="idEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_Rol" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_de_accion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="accion" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tipo_De_Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="clave" Type="varchar" MaxLength="9" Nullable="false" />
+          <Property Name="iDRol" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Cliente__idtc__5070F446">
+          <End Role="Tipo_De_Cliente" Type="Self.Tipo_De_Cliente" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_De_Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idtc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Despacho__idClie__59FA5E80">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Despacho" Type="Self.Despacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Despacho">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Despacho__idProd__5AEE82B9">
+          <End Role="Productos" Type="Self.Productos" Multiplicity="1" />
+          <End Role="Despacho" Type="Self.Despacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Despacho">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Despacho__idTda__59063A47">
+          <End Role="Tipo_de_accion" Type="Self.Tipo_de_accion" Multiplicity="1" />
+          <End Role="Despacho" Type="Self.Despacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_de_accion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Despacho">
+              <PropertyRef Name="idTda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permisos___idPer__412EB0B6">
+          <End Role="Permisos" Type="Self.Permisos" Multiplicity="1" />
+          <End Role="Permisos_Por_Rol" Type="Self.Permisos_Por_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Permisos_Por_Rol">
+              <PropertyRef Name="idPermisos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permisos___idRol__403A8C7D">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Permisos_Por_Rol" Type="Self.Permisos_Por_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Permisos_Por_Rol">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permisos__idModu__38996AB5">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="1" />
+          <End Role="Permisos" Type="Self.Permisos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Permisos">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__idEst__5535A963">
+          <End Role="EstadoProducto" Type="Self.EstadoProducto" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoProducto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="idEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__iDRol__3D5E1FD2">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="iDRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProyectoFinalModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoProducto" EntityType="Self.EstadoProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modulo" EntityType="Self.Modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permisos" EntityType="Self.Permisos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permisos_Por_Rol" EntityType="Self.Permisos_Por_Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productos" EntityType="Self.Productos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_de_accion" EntityType="Self.Tipo_de_accion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tipo_De_Cliente" EntityType="Self.Tipo_De_Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Despacho" EntityType="Self.Despacho" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Despacho].[Fecha] AS [Fecha], 
+    [Despacho].[idTda] AS [idTda], 
+    [Despacho].[idCliente] AS [idCliente], 
+    [Despacho].[idProducto] AS [idProducto]
+    FROM [dbo].[Despacho] AS [Despacho]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Cliente__idtc__5070F446" Association="Self.FK__Cliente__idtc__5070F446">
+            <End Role="Tipo_De_Cliente" EntitySet="Tipo_De_Cliente" />
+            <End Role="Cliente" EntitySet="Cliente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Despacho__idClie__59FA5E80" Association="Self.FK__Despacho__idClie__59FA5E80">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Despacho" EntitySet="Despacho" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Despacho__idProd__5AEE82B9" Association="Self.FK__Despacho__idProd__5AEE82B9">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Despacho" EntitySet="Despacho" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Despacho__idTda__59063A47" Association="Self.FK__Despacho__idTda__59063A47">
+            <End Role="Tipo_de_accion" EntitySet="Tipo_de_accion" />
+            <End Role="Despacho" EntitySet="Despacho" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permisos___idPer__412EB0B6" Association="Self.FK__Permisos___idPer__412EB0B6">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="Permisos_Por_Rol" EntitySet="Permisos_Por_Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permisos___idRol__403A8C7D" Association="Self.FK__Permisos___idRol__403A8C7D">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Permisos_Por_Rol" EntitySet="Permisos_Por_Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permisos__idModu__38996AB5" Association="Self.FK__Permisos__idModu__38996AB5">
+            <End Role="Modulo" EntitySet="Modulo" />
+            <End Role="Permisos" EntitySet="Permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__idEst__5535A963" Association="Self.FK__Productos__idEst__5535A963">
+            <End Role="EstadoProducto" EntitySet="EstadoProducto" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__iDRol__3D5E1FD2" Association="Self.FK__Usuario__iDRol__3D5E1FD2">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProyectoFinalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idtc" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Tipo_De_Cliente" Relationship="Self.FK__Cliente__idtc__5070F446" FromRole="Cliente" ToRole="Tipo_De_Cliente" />
+          <NavigationProperty Name="Despachoes" Relationship="Self.FK__Despacho__idClie__59FA5E80" FromRole="Cliente" ToRole="Despacho" />
+        </EntityType>
+        <EntityType Name="EstadoProducto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Productos" Relationship="Self.FK__Productos__idEst__5535A963" FromRole="EstadoProducto" ToRole="Productos" />
+        </EntityType>
+        <EntityType Name="Modulo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Permisos" Relationship="Self.FK__Permisos__idModu__38996AB5" FromRole="Modulo" ToRole="Permisos" />
+        </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="idModulo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Modulo" Relationship="Self.FK__Permisos__idModu__38996AB5" FromRole="Permisos" ToRole="Modulo" />
+          <NavigationProperty Name="Permisos_Por_Rol" Relationship="Self.FK__Permisos___idPer__412EB0B6" FromRole="Permisos" ToRole="Permisos_Por_Rol" />
+        </EntityType>
+        <EntityType Name="Permisos_Por_Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idRol" Type="Int32" Nullable="false" />
+          <Property Name="idPermisos" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Permiso" Relationship="Self.FK__Permisos___idPer__412EB0B6" FromRole="Permisos_Por_Rol" ToRole="Permisos" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Permisos___idRol__403A8C7D" FromRole="Permisos_Por_Rol" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha_Creacion" Type="DateTime" Precision="3" />
+          <Property Name="Fecha_Vencimiento" Type="DateTime" Precision="3" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="udm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Costo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Existencia" Type="Int32" Nullable="false" />
+          <Property Name="idEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EstadoProducto" Relationship="Self.FK__Productos__idEst__5535A963" FromRole="Productos" ToRole="EstadoProducto" />
+          <NavigationProperty Name="Despachoes" Relationship="Self.FK__Despacho__idProd__5AEE82B9" FromRole="Productos" ToRole="Despacho" />
+        </EntityType>
+        <EntityType Name="Rol">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Permisos_Por_Rol" Relationship="Self.FK__Permisos___idRol__403A8C7D" FromRole="Rol" ToRole="Permisos_Por_Rol" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Usuario__iDRol__3D5E1FD2" FromRole="Rol" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Tipo_de_accion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="accion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Despachoes" Relationship="Self.FK__Despacho__idTda__59063A47" FromRole="Tipo_de_accion" ToRole="Despacho" />
+        </EntityType>
+        <EntityType Name="Tipo_De_Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK__Cliente__idtc__5070F446" FromRole="Tipo_De_Cliente" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="clave" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="iDRol" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rol" Relationship="Self.FK__Usuario__iDRol__3D5E1FD2" FromRole="Usuario" ToRole="Rol" />
+        </EntityType>
+        <EntityType Name="Despacho">
+          <Key>
+            <PropertyRef Name="idTda" />
+            <PropertyRef Name="idCliente" />
+            <PropertyRef Name="idProducto" />
+          </Key>
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="idTda" Type="Int32" Nullable="false" />
+          <Property Name="idCliente" Type="Int32" Nullable="false" />
+          <Property Name="idProducto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Despacho__idClie__59FA5E80" FromRole="Despacho" ToRole="Cliente" />
+          <NavigationProperty Name="Producto" Relationship="Self.FK__Despacho__idProd__5AEE82B9" FromRole="Despacho" ToRole="Productos" />
+          <NavigationProperty Name="Tipo_de_accion" Relationship="Self.FK__Despacho__idTda__59063A47" FromRole="Despacho" ToRole="Tipo_de_accion" />
+        </EntityType>
+        <Association Name="FK__Cliente__idtc__5070F446">
+          <End Role="Tipo_De_Cliente" Type="Self.Tipo_De_Cliente" Multiplicity="1" />
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_De_Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cliente">
+              <PropertyRef Name="idtc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Despacho__idClie__59FA5E80">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Despacho" Type="Self.Despacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Despacho">
+              <PropertyRef Name="idCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Productos__idEst__5535A963">
+          <End Role="EstadoProducto" Type="Self.EstadoProducto" Multiplicity="1" />
+          <End Role="Productos" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoProducto">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="idEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permisos__idModu__38996AB5">
+          <End Role="Modulo" Type="Self.Modulo" Multiplicity="1" />
+          <End Role="Permisos" Type="Self.Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Permisos">
+              <PropertyRef Name="idModulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permisos___idPer__412EB0B6">
+          <End Role="Permisos" Type="Self.Permiso" Multiplicity="1" />
+          <End Role="Permisos_Por_Rol" Type="Self.Permisos_Por_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permisos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Permisos_Por_Rol">
+              <PropertyRef Name="idPermisos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Permisos___idRol__403A8C7D">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Permisos_Por_Rol" Type="Self.Permisos_Por_Rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Permisos_Por_Rol">
+              <PropertyRef Name="idRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Despacho__idProd__5AEE82B9">
+          <End Role="Productos" Type="Self.Producto" Multiplicity="1" />
+          <End Role="Despacho" Type="Self.Despacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productos">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Despacho">
+              <PropertyRef Name="idProducto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Usuario__iDRol__3D5E1FD2">
+          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="iDRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Despacho__idTda__59063A47">
+          <End Role="Tipo_de_accion" Type="Self.Tipo_de_accion" Multiplicity="1" />
+          <End Role="Despacho" Type="Self.Despacho" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tipo_de_accion">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Despacho">
+              <PropertyRef Name="idTda" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProyectoFinal" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Cliente" />
+          <EntitySet Name="EstadoProductoes" EntityType="Self.EstadoProducto" />
+          <EntitySet Name="Moduloes" EntityType="Self.Modulo" />
+          <EntitySet Name="Permisos" EntityType="Self.Permiso" />
+          <EntitySet Name="Permisos_Por_Rol" EntityType="Self.Permisos_Por_Rol" />
+          <EntitySet Name="Productos" EntityType="Self.Producto" />
+          <EntitySet Name="Rols" EntityType="Self.Rol" />
+          <EntitySet Name="Tipo_de_accion" EntityType="Self.Tipo_de_accion" />
+          <EntitySet Name="Tipo_De_Cliente" EntityType="Self.Tipo_De_Cliente" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <EntitySet Name="Despachoes" EntityType="Self.Despacho" />
+          <AssociationSet Name="FK__Cliente__idtc__5070F446" Association="Self.FK__Cliente__idtc__5070F446">
+            <End Role="Tipo_De_Cliente" EntitySet="Tipo_De_Cliente" />
+            <End Role="Cliente" EntitySet="Clientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Despacho__idClie__59FA5E80" Association="Self.FK__Despacho__idClie__59FA5E80">
+            <End Role="Cliente" EntitySet="Clientes" />
+            <End Role="Despacho" EntitySet="Despachoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Productos__idEst__5535A963" Association="Self.FK__Productos__idEst__5535A963">
+            <End Role="EstadoProducto" EntitySet="EstadoProductoes" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permisos__idModu__38996AB5" Association="Self.FK__Permisos__idModu__38996AB5">
+            <End Role="Modulo" EntitySet="Moduloes" />
+            <End Role="Permisos" EntitySet="Permisos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permisos___idPer__412EB0B6" Association="Self.FK__Permisos___idPer__412EB0B6">
+            <End Role="Permisos" EntitySet="Permisos" />
+            <End Role="Permisos_Por_Rol" EntitySet="Permisos_Por_Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Permisos___idRol__403A8C7D" Association="Self.FK__Permisos___idRol__403A8C7D">
+            <End Role="Rol" EntitySet="Rols" />
+            <End Role="Permisos_Por_Rol" EntitySet="Permisos_Por_Rol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Despacho__idProd__5AEE82B9" Association="Self.FK__Despacho__idProd__5AEE82B9">
+            <End Role="Productos" EntitySet="Productos" />
+            <End Role="Despacho" EntitySet="Despachoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Usuario__iDRol__3D5E1FD2" Association="Self.FK__Usuario__iDRol__3D5E1FD2">
+            <End Role="Rol" EntitySet="Rols" />
+            <End Role="Usuario" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Despacho__idTda__59063A47" Association="Self.FK__Despacho__idTda__59063A47">
+            <End Role="Tipo_de_accion" EntitySet="Tipo_de_accion" />
+            <End Role="Despacho" EntitySet="Despachoes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProyectoFinalModelStoreContainer" CdmEntityContainer="ProyectoFinal">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="idtc" ColumnName="idtc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoProductoes">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.EstadoProducto">
+              <MappingFragment StoreEntitySet="EstadoProducto">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Moduloes">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Modulo">
+              <MappingFragment StoreEntitySet="Modulo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permisos">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Permiso">
+              <MappingFragment StoreEntitySet="Permisos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idModulo" ColumnName="idModulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permisos_Por_Rol">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Permisos_Por_Rol">
+              <MappingFragment StoreEntitySet="Permisos_Por_Rol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idRol" ColumnName="idRol" />
+                <ScalarProperty Name="idPermisos" ColumnName="idPermisos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productos">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Producto">
+              <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Fecha_Creacion" ColumnName="Fecha_Creacion" />
+                <ScalarProperty Name="Fecha_Vencimiento" ColumnName="Fecha_Vencimiento" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="udm" ColumnName="udm" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+                <ScalarProperty Name="Existencia" ColumnName="Existencia" />
+                <ScalarProperty Name="idEstado" ColumnName="idEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rols">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Rol">
+              <MappingFragment StoreEntitySet="Rol">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre_Rol" ColumnName="nombre_Rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_de_accion">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Tipo_de_accion">
+              <MappingFragment StoreEntitySet="Tipo_de_accion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tipo_De_Cliente">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Tipo_De_Cliente">
+              <MappingFragment StoreEntitySet="Tipo_De_Cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+                <ScalarProperty Name="iDRol" ColumnName="iDRol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Despachoes">
+            <EntityTypeMapping TypeName="ProyectoFinalModel.Despacho">
+              <MappingFragment StoreEntitySet="Despacho">
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="idTda" ColumnName="idTda" />
+                <ScalarProperty Name="idCliente" ColumnName="idCliente" />
+                <ScalarProperty Name="idProducto" ColumnName="idProducto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

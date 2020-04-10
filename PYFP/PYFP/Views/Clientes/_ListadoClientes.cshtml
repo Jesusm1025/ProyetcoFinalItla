@@ -1,0 +1,55 @@
+﻿@model IEnumerable<PYFP.Models.ClientesBusqueda>
+@{
+    ViewBag.Title = "_ListadoClientes";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(Model => Model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(Model => Model.RNC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(Model => Model.TipoCliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(Model => Model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(Model => Model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(Model => Model.Direccion)
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RNC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.clienteId })
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.clienteId })
+            </td>
+        </tr>
+    }
+</table>

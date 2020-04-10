@@ -1,0 +1,42 @@
+﻿@model PF.Models.UdM
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UdM</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.UnidadBase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnidadBase)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnidadVenta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnidadVenta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnidadCompra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnidadCompra)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UdmId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

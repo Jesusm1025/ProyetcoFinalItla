@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="97601ac179a244c08fa597f5fc8b3a00" Name="Diagram1">
+        <EntityTypeShape EntityType="ProyectoFinalModel.Cliente" Width="1.5" PointX="2.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.EstadoProducto" Width="1.5" PointX="1.875" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Modulo" Width="1.5" PointX="8.125" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Permiso" Width="1.5" PointX="10.375" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Permisos_Por_Rol" Width="1.5" PointX="10.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Producto" Width="1.5" PointX="5.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Rol" Width="1.5" PointX="10.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Tipo_de_accion" Width="1.5" PointX="7.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Tipo_De_Cliente" Width="1.5" PointX="0.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Usuario" Width="1.5" PointX="7.875" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProyectoFinalModel.Despacho" Width="1.5" PointX="5.25" PointY="0.625" IsExpanded="true" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Cliente__idtc__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Despacho__idClie__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Productos__idEst__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Permisos__idModu__38996AB5" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Permisos___idPer__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Permisos___idRol__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Despacho__idProd__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Usuario__iDRol__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="ProyectoFinalModel.FK__Despacho__idTda__59063A47" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

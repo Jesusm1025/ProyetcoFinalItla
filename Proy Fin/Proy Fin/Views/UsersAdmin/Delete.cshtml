@@ -1,0 +1,31 @@
+﻿@model Proy_Fin.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar.</h2>
+
+<h3>Estas seguro de que quieres eliminar a este usuario?</h3>
+<div>
+    <h4>User.</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a la lista", "Index")
+        </div>
+    }
+</div>
